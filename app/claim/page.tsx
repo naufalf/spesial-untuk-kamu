@@ -1,8 +1,7 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, Suspense } from "react";
 import { useSearchParams } from "next/navigation";
-
 
 interface BonusItem {
   id: string;
@@ -13,7 +12,7 @@ interface BonusItem {
   isActive?: boolean;
 }
 
-export default function ClaimPage() {
+function ClaimPageContent() {
   const searchParams = useSearchParams();
   const userKey = searchParams.get("user");
   const [userData, setUserData] = useState<BonusItem | null>(null);
@@ -57,8 +56,6 @@ export default function ClaimPage() {
       </main>
     );
   }
-
-
 
   return (
     <main
@@ -247,93 +244,99 @@ export default function ClaimPage() {
             zIndex: 9999,
           }}
         >
-        <div
-          style={{
-          backgroundColor: "#fff",
-          padding: "2rem",
-          borderRadius: "1rem",
-          maxWidth: 400,
-          width: "90%",
-          textAlign: "center",
-          boxShadow: "0 5px 15px rgba(0,0,0,0.2)",
-          position: "relative", // Agar tombol X bisa diposisikan dengan benar
-        }}
-        >
-        {/* Tombol silang (X) untuk menutup modal */}
-        <button
-          onClick={() => setShowModal(false)}
-          style={{
-            position: "absolute",
-            top: "0.75rem",
-            right: "0.75rem",
-            background: "transparent",
-            border: "none",
-            fontSize: "1.5rem",
-            fontWeight: "bold",
-            color: "#6b7280",
-            cursor: "pointer",
-          }}
-        aria-label="Tutup"
-        >
-          ✖
-        </button>
+          <div
+            style={{
+              backgroundColor: "#fff",
+              padding: "2rem",
+              borderRadius: "1rem",
+              maxWidth: 400,
+              width: "90%",
+              textAlign: "center",
+              boxShadow: "0 5px 15px rgba(0,0,0,0.2)",
+              position: "relative", // Agar tombol X bisa diposisikan dengan benar
+            }}
+          >
+            {/* Tombol silang (X) untuk menutup modal */}
+            <button
+              onClick={() => setShowModal(false)}
+              style={{
+                position: "absolute",
+                top: "0.75rem",
+                right: "0.75rem",
+                background: "transparent",
+                border: "none",
+                fontSize: "1.5rem",
+                fontWeight: "bold",
+                color: "#6b7280",
+                cursor: "pointer",
+              }}
+              aria-label="Tutup"
+            >
+              ✖
+            </button>
 
-  <h2
-    style={{
-      color: "#10b981",
-      fontSize: "1.25rem",
-      fontWeight: 700,
-      marginBottom: "1rem",
-    }}
-  >
-    🎉 Bonus Kamu Sudah Diklaim!
-  </h2>
-  <p style={{ marginBottom: "1rem", color: "#374151" }}>
-    Screenshoot list bonusnya dan tunjukkan ke tim yang handle kamu saat kamu datang kembali ke booth kami.
-  </p>
+            <h2
+              style={{
+                color: "#10b981",
+                fontSize: "1.25rem",
+                fontWeight: 700,
+                marginBottom: "1rem",
+              }}
+            >
+              🎉 Bonus Kamu Sudah Diklaim!
+            </h2>
+            <p style={{ marginBottom: "1rem", color: "#374151" }}>
+              Screenshoot list bonusnya dan tunjukkan ke tim yang handle kamu saat kamu datang kembali ke booth kami.
+            </p>
 
+            {/* Tombol WhatsApp Marketing */}
+            <a
+              href="https://wa.me/6282121219450" // Ganti dengan nomor WhatsApp lo
+              target="_blank"
+              rel="noopener noreferrer"
+              style={{
+                backgroundColor: "#22c55e",
+                color: "#fff",
+                padding: "0.5rem 1.25rem",
+                borderRadius: "0.5rem",
+                fontWeight: "bold",
+                textDecoration: "none",
+                display: "inline-block",
+                marginBottom: 12,
+              }}
+            >
+              💬 Hubungi Kami via WhatsApp
+            </a>
+            <br />
 
-  {/* Tombol WhatsApp Marketing */}
-  <a
-    href="https://wa.me/6282121219450" // Ganti dengan nomor WhatsApp lo
-    target="_blank"
-    rel="noopener noreferrer"
-    style={{
-      backgroundColor: "#22c55e",
-      color: "#fff",
-      padding: "0.5rem 1.25rem",
-      borderRadius: "0.5rem",
-      fontWeight: "bold",
-      textDecoration: "none",
-      display: "inline-block",
-      marginBottom: 12,
-    }}
-    >
-    💬 Hubungi Kami via WhatsApp
-  </a>
-  <br />  
-
-      {/* Tombol ke Instagram */}
-        <a
-          href="https://www.instagram.com/rindang.amena" // Ganti dengan link Instagram lo
-          target="_blank"
-          rel="noopener noreferrer"
-          style={{
-            backgroundColor: "#2563eb",
-            color: "#fff",
-            padding: "0.5rem 1rem",
-            borderRadius: "0.5rem",
-            fontWeight: "bold",
-            textDecoration: "none",
-            display: "inline-block",
-          }}
-        >
-          📸 Kunjungi Instagram
-        </a>
-        </div>
-
+            {/* Tombol ke Instagram */}
+            <a
+              href="https://www.instagram.com/rindang.amena" // Ganti dengan link Instagram lo
+              target="_blank"
+              rel="noopener noreferrer"
+              style={{
+                backgroundColor: "#2563eb",
+                color: "#fff",
+                padding: "0.5rem 1rem",
+                borderRadius: "0.5rem",
+                fontWeight: "bold",
+                textDecoration: "none",
+                display: "inline-block",
+              }}
+            >
+              📸 Kunjungi Instagram
+            </a>
+          </div>
         </div>
       )}
     </main>
+  );
+}
+
+export default function ClaimPageWithSuspense() {
+  return (
+    <Suspense fallback={<div>Loading...</div>}>
+      <ClaimPageContent />
+    </Suspense>
   );
 }
