@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState, Suspense } from "react";
+import { useEffect, useState } from "react";
 import { useSearchParams } from "next/navigation";
 
 
@@ -61,7 +61,6 @@ export default function ClaimPage() {
 
 
   return (
-  <Suspense fallback={<div>Loading...</div>}>
     <main
       style={{
         minHeight: "100vh",
@@ -336,6 +335,5 @@ export default function ClaimPage() {
         </div>
       )}
     </main>
-  </Suspense>
   );
 }
