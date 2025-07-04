@@ -58,48 +58,7 @@ export default function ClaimPage() {
     );
   }
 
-  const handleDownloadGiftCard = () => {
-    const pdf = new jsPDF("p", "mm", "a4");
-  
-    // Set up Gift Card Layout
-    const cardWidth = 180;
-    const cardHeight = 100;
 
-    // Nama Pengantin dan Bonus
-    const name = userData?.name || "Nama Pengantin";
-    const bonus = userData?.bonus || "Bonus List: ...";
-    
-    // Menambahkan Background Gift Card
-    pdf.setFillColor(255, 255, 255); // White background
-    pdf.rect(10, 10, cardWidth, cardHeight, "F");
-
-    // Menambahkan Teks
-    pdf.setFont("Helvetica", "bold");
-    pdf.setFontSize(14);
-    pdf.text(`🎁 Gift Card untuk: ${name}`, 20, 30);
-    
-    pdf.setFontSize(12);
-    pdf.text(`Bonus yang didapat:`, 20, 50);
-    pdf.text(bonus, 20, 60);
-    
-    // Generate Barcode
-    const barcodeValue = `${userData?.id}`; // Gunakan ID atau link yang sesuai
-    JsBarcode("#barcode", barcodeValue, {
-      format: "CODE128", // Tipe barcode
-      width: 2,
-      height: 30,
-  });
-
-  // Tempel Barcode di Gift Card
-  const barcodeData = document.getElementById("barcode");
-  const barcodeCanvas = barcodeData?.toDataURL("image/png");
-  if (barcodeCanvas) {
-    pdf.addImage(barcodeCanvas, "PNG", 120, 50, 50, 30); // Menempatkan barcode di posisi yang tepat
-  }
-
-  // Simpan PDF Gift Card
-  pdf.save(`${name}_gift_card.pdf`);
-};
 
   return (
     <main
