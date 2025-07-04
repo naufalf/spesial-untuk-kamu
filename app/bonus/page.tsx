@@ -9,7 +9,7 @@ export default function BonusPage() {
   const searchParams = useSearchParams();
   const userKey = searchParams.get("user");
 
-  const [userData, setUserData] = useState<any>(null);
+  const [userData, setUserData] = useState<UserData | null>(null);
   const [claimed, setClaimed] = useState(false);
   const [timeLeft, setTimeLeft] = useState("");
 
